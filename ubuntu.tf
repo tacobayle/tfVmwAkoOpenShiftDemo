@@ -34,7 +34,6 @@ data "template_file" "ubuntu_userdata_static" {
     pubkey        = chomp(tls_private_key.ssh.public_key_openssh)
     net_plan_file = var.ubuntu.net_plan_file
     hostname = "${var.ubuntu.basename}${random_string.id.result}${count.index}"
-    network_config  = base64encode(data.template_file.network_dhcp_static.rendered)
   }
 }
 
@@ -47,6 +46,7 @@ data "template_file" "ubuntu_userdata_dhcp" {
     hostname = "${var.ubuntu.basename}${random_string.id.result}${count.index}"
     network_config  = base64encode(data.template_file.network_dhcp_static.rendered)
     net_plan_file = var.ubuntu.net_plan_file
+    network_config  = base64encode(data.template_file.network_dhcp_static.rendered)
   }
 }
 

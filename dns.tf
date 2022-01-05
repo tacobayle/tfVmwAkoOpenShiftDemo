@@ -32,7 +32,6 @@ data "template_file" "dns_userdata_dhcp" {
     domain = "${var.cluster_name}.${var.domain}"
     openshift_api_ip = var.openshift_api_ip
     openshift_ingress_ip = var.openshift_ingress_ip
-    network_config  = base64encode(data.template_file.network_dns[count.index].rendered)
   }
 }
 
