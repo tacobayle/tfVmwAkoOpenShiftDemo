@@ -36,7 +36,7 @@ write_files:
       }
       run_cmd '! sudo apt update | grep Err'
       cp /tmp/50-cloud-init.yaml /tmp/50-cloud-init.yaml.old
-      until [ ! -z "$if_to_be_replaced" ] ; do if_primary_name=$(ip route | grep default | sed -e "s/^.*dev.//" -e "s/.proto.*//")  ; sleep 2 ; done
+      until [ ! -z "$if_to_be_replaced" ] ; do if_to_be_replaced=$(ip route | grep default | sed -e "s/^.*dev.//" -e "s/.proto.*//")  ; sleep 2 ; done
       until [ ! -z "$ip" ] ; do ip=$(ip address show dev $if_to_be_replaced | grep -v inet6 | grep inet | awk '{print $2}' | awk -F'/' '{print $1}')  ; sleep 2 ; done
       until [ ! -z "$prefix_length" ] ; do prefix_length=$(ip address show dev $if_primary_name | grep -v inet6 | grep inet | awk '{print $2}' | awk -F'/' '{print $2}')  ; sleep 2 ; done
       until [ ! -z "$gw" ] ; do gw=$(ip route show 0.0.0.0/0 | awk '{print $3}')  ; sleep 2 ; done
