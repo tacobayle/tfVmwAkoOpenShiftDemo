@@ -17,7 +17,6 @@ data "template_file" "dns_userdata_static" {
     pubkey        = chomp(tls_private_key.ssh.public_key_openssh)
     netplanFile = var.dns.net_plan_file
     hostname = "${var.dns.basename}${random_string.id.result}${count.index}"
-    network_config  = base64encode(data.template_file.network_dns[count.index].rendered)
   }
 }
 
@@ -33,6 +32,7 @@ data "template_file" "dns_userdata_dhcp" {
     domain = "${var.cluster_name}.${var.domain}"
     openshift_api_ip = var.openshift_api_ip
     openshift_ingress_ip = var.openshift_ingress_ip
+    network_config  = base64encode(data.template_file.network_dns[count.index].rendered)
   }
 }
 
@@ -41,6 +41,7 @@ resource "vsphere_virtual_machine" "dns" {
   name             = "${var.dns.basename}${random_string.id.result}${count.index}"
   datastore_id     = data.vsphere_datastore.datastore.id
   resource_pool_id = data.vsphere_resource_pool.pool.id
+  folder           = vsphere_folder.folder.path
   network_interface {
                       network_id = data.vsphere_network.network.id
   }

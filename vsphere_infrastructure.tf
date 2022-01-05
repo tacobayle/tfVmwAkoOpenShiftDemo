@@ -23,3 +23,8 @@ data "vsphere_network" "network" {
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 #
+resource "vsphere_folder" "folder" {
+  path          = "${var.vcenter_folder}-${random_string.id.result}"
+  type          = "vm"
+  datacenter_id = data.vsphere_datacenter.dc.id
+}

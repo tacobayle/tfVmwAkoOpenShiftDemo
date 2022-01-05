@@ -55,6 +55,7 @@ resource "vsphere_virtual_machine" "ubuntu" {
   name             = "${var.ubuntu.basename}${random_string.id.result}${count.index}"
   datastore_id     = data.vsphere_datastore.datastore.id
   resource_pool_id = data.vsphere_resource_pool.pool.id
+  folder           = vsphere_folder.folder.path
   network_interface {
                       network_id = data.vsphere_network.network.id
   }

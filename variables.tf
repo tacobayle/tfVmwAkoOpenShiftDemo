@@ -19,6 +19,10 @@ variable "vcenter" {
   }
 }
 
+variable "vcenter_folder" {
+  default = "tf_ako_openshift_demo"
+}
+
 variable "ubuntu_ip4_addresses" {
   default = ["10.206.112.56/22", "10.206.112.57/22"]
 }
