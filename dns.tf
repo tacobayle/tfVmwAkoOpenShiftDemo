@@ -22,7 +22,7 @@ data "template_file" "dns_userdata_static" {
 }
 
 data "template_file" "dns_userdata_dhcp" {
-  template = file("${path.module}/userdata/ubuntu_dhcp.userdata")
+  template = file("${path.module}/userdata/dns_dhcp.userdata")
   count            = (var.dhcp == true ? 1 : 0)
   vars = {
     password      = var.ubuntu_password == null ? random_string.ubuntu_password.result : var.ubuntu_password
