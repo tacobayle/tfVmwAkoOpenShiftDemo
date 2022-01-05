@@ -32,7 +32,7 @@ data "template_file" "dns_userdata_dhcp" {
 }
 
 resource "vsphere_virtual_machine" "dns" {
-  count            = var.dhcp == false ? 1 : var.dns.count
+  count            = 1
   name             = "${var.dns.basename}${random_string.id.result}${count.index}"
   datastore_id     = data.vsphere_datastore.datastore.id
   resource_pool_id = data.vsphere_resource_pool.pool.id
