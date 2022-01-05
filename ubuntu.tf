@@ -19,8 +19,7 @@ data "template_file" "network" {
   }
 }
 
-
-data "template_file" "network_master_dhcp_static" {
+data "template_file" "network_dhcp_static" {
   template = file("templates/network_dhcp.template")
   vars = {
     dns_ip = var.dhcp == false ? split("/", var.ubuntu_ip4_addresses[-1])[0] : vsphere_virtual_machine.dns[0].default_ip_address
@@ -33,9 +32,9 @@ data "template_file" "ubuntu_userdata_static" {
   vars = {
     password      = var.ubuntu_password == null ? random_string.ubuntu_password.result : var.ubuntu_password
     pubkey        = chomp(tls_private_key.ssh.public_key_openssh)
-    netplanFile = var.ubuntu.netplanFile
+    net_plan_file = var.ubuntu.net_plan_file
     hostname = "${var.ubuntu.basename}${random_string.id.result}${count.index}"
-    network_config  = base64encode(data.template_file.network[count.index].rendered)
+    network_config_static  = base64encode(data.template_file.network_dhcp_static.rendered)
   }
 }
 
@@ -46,6 +45,8 @@ data "template_file" "ubuntu_userdata_dhcp" {
     password      = var.ubuntu_password == null ? random_string.ubuntu_password.result : var.ubuntu_password
     pubkey        = chomp(tls_private_key.ssh.public_key_openssh)
     hostname = "${var.ubuntu.basename}${random_string.id.result}${count.index}"
+    network_config  = base64encode(data.template_file.network_dhcp_static.rendered)
+    net_plan_file = var.ubuntu.net_plan_file
   }
 }
 

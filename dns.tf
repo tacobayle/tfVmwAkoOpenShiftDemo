@@ -15,7 +15,7 @@ data "template_file" "dns_userdata_static" {
   vars = {
     password      = var.ubuntu_password == null ? random_string.ubuntu_password.result : var.ubuntu_password
     pubkey        = chomp(tls_private_key.ssh.public_key_openssh)
-    netplanFile = var.dns.netplanFile
+    netplanFile = var.dns.net_plan_file
     hostname = "${var.dns.basename}${random_string.id.result}${count.index}"
     network_config  = base64encode(data.template_file.network_dns[count.index].rendered)
   }

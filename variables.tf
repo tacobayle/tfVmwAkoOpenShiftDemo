@@ -79,7 +79,7 @@ variable "ubuntu" {
     memory = 8192
     disk = 12
     wait_for_guest_net_routable = "false"
-    netplanFile = "/etc/netplan/50-cloud-init.yaml"
+    net_plan_file = "/etc/netplan/50-cloud-init.yaml"
   }
 }
 
@@ -92,7 +92,7 @@ variable "dns" {
     memory = 4096
     disk = 12
     wait_for_guest_net_routable = "false"
-    netplanFile = "/etc/netplan/50-cloud-init.yaml"
+    net_plan_file = "/etc/netplan/50-cloud-init.yaml"
     bind = {
       key_name = "my_key_name"
     }
