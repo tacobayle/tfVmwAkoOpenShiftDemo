@@ -66,3 +66,17 @@ variable "ubuntu" {
     netplanFile = "/etc/netplan/50-cloud-init.yaml"
   }
 }
+
+variable "dns" {
+  type = map
+  default = {
+    basename = "dns-tf-"
+    username = "ubuntu"
+    cpu = 4
+    if_name = "ens192"
+    memory = 4096
+    disk = 12
+    wait_for_guest_net_routable = "false"
+    netplanFile = "/etc/netplan/50-cloud-init.yaml"
+  }
+}
