@@ -19,6 +19,14 @@ data "template_file" "network" {
   }
 }
 
+
+data "template_file" "network_master_dhcp_static" {
+  template = file("templates/network_dhcp.template")
+  vars = {
+    dns_ip = var.dhcp == false ? split("/", var.ubuntu_ip4_addresses[-1])[0] : vsphere_virtual_machine.dns[0].default_ip_address
+  }
+}
+
 data "template_file" "ubuntu_userdata_static" {
   template = file("${path.module}/userdata/ubuntu_static.userdata")
   count            = (var.dhcp == false ? var.ubuntu.count : 0)
@@ -28,6 +36,16 @@ data "template_file" "ubuntu_userdata_static" {
     netplanFile = var.ubuntu.netplanFile
     hostname = "${var.ubuntu.basename}${random_string.id.result}${count.index}"
     network_config  = base64encode(data.template_file.network[count.index].rendered)
+  }
+}
+
+data "template_file" "ubuntu_userdata_dhcp" {
+  template = file("${path.module}/userdata/ubuntu_dhcp.userdata")
+  count            = (var.dhcp == true ? 1 : 0)
+  vars = {
+    password      = var.ubuntu_password == null ? random_string.ubuntu_password.result : var.ubuntu_password
+    pubkey        = chomp(tls_private_key.ssh.public_key_openssh)
+    hostname = "${var.ubuntu.basename}${random_string.id.result}${count.index}"
   }
 }
 
@@ -79,15 +97,5 @@ resource "vsphere_virtual_machine" "ubuntu" {
    inline      = [
      "while [ ! -f /tmp/cloudInitDone.log ]; do sleep 1; done"
    ]
-  }
-}
-
-data "template_file" "ubuntu_userdata_dhcp" {
-  template = file("${path.module}/userdata/ubuntu_dhcp.userdata")
-  count            = (var.dhcp == true ? 1 : 0)
-  vars = {
-    password      = var.ubuntu_password == null ? random_string.ubuntu_password.result : var.ubuntu_password
-    pubkey        = chomp(tls_private_key.ssh.public_key_openssh)
-    hostname = "${var.ubuntu.basename}${random_string.id.result}${count.index}"
   }
 }

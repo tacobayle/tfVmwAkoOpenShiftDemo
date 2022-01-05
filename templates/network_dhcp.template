@@ -1,0 +1,10 @@
+network:
+  version: 2
+  ethernets:
+    if_to_be_replaced:
+      dhcp4: true
+      addresses:
+        - ip_to_be_replaced/prefix_length_to_be_replaced
+      gateway4: gw_to_be_replaced
+      nameservers:
+        addresses: [${dns_ip}]

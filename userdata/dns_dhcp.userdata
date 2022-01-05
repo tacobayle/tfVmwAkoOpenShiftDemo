@@ -36,7 +36,7 @@ write_files:
       }
       run_cmd '! sudo apt update | grep Err'
       run_cmd 'sudo apt install -y python3-pip; ls /usr/bin/pip3'
-      run_cmd 'sudo apt install -y bind9; ls /usr/share/bind9'
+      run_cmd 'sudo apt install -y bind9; ls /etc/bind'
       #
       # Bind config
       #
