@@ -96,7 +96,7 @@ write_files:
       addr="in-addr.arpa"
       IFS="." read -r -a octets <<< "$ip"
       count=0
-      for octet in "${octets[@]}"; do if [ $count -eq 3 ]; then break ; fi ; addr=$octet"."$addr ;((count++)) ; done
+      for octet in "$${octets[@]}"; do if [ $count -eq 3 ]; then break ; fi ; addr=$octet"."$addr ;((count++)) ; done
       sed -i -e "s/reverse_to_be_replaced/\"$addr\"/g" /etc/bind/named.conf.local
       #
       sudo tee /var/lib/bind/db.${domain} > /dev/null <<EOT
@@ -132,7 +132,7 @@ write_files:
       EOT
       sed -i -e "s/reverse_to_be_replaced/\"$addr\"/g" /var/lib/bind/db.reverse
       count=0
-      for octet in "${octets[@]}"; do if [ $count -eq 3 ]; then last_octet=$octet ; fi ; ((count++)) ; done
+      for octet in "$${octets[@]}"; do if [ $count -eq 3 ]; then last_octet=$octet ; fi ; ((count++)) ; done
       sed -i -e "s/last_octet_to_be_replaced/\"$last_octet\"/g" /var/lib/bind/db.reverse
       sudo service bind9 restart
       echo "cloud init done" | tee /tmp/cloudInitDone.log
