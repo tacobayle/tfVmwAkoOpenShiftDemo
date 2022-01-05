@@ -61,7 +61,7 @@ write_files:
         allow-query { any; };
         allow-query-cache { any; };
         allow-recursion { any; };
-        forwarders { dns_to_be_replaced ; };
+        forwarders { dns_to_be_replaced; };
         dnssec-validation no;
         auth-nxdomain no; # conform to RFC1035
         listen-on { localhost; any; };

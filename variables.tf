@@ -52,7 +52,7 @@ variable "ssh_key" {
   default = {
     algorithm            = "RSA"
     rsa_bits             = "4096"
-    private_key_name = "ssh_private_key_tf_ubuntu"
+    private_key_name = "ssh_private_key_tf_openshift"
     file_permission      = "0600"
   }
 }

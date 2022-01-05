@@ -34,7 +34,7 @@ data "template_file" "ubuntu_userdata_static" {
     pubkey        = chomp(tls_private_key.ssh.public_key_openssh)
     net_plan_file = var.ubuntu.net_plan_file
     hostname = "${var.ubuntu.basename}${random_string.id.result}${count.index}"
-    network_config_static  = base64encode(data.template_file.network_dhcp_static.rendered)
+    network_config  = base64encode(data.template_file.network_dhcp_static.rendered)
   }
 }
 
