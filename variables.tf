@@ -35,6 +35,18 @@ variable "domain" {
   default = "avi.com"
 }
 
+variable "cluster_name" {
+  default = "cluster1"
+}
+
+variable "openshift_api_ip" {
+  default = "1.1.1.1"
+}
+
+variable "openshift_ingress_ip" {
+  default = "1.1.1.2"
+}
+
 variable "ssh_key" {
   type = map
   default = {
@@ -52,7 +64,7 @@ variable "dhcp" {
 variable "content_library" {
   default = {
     basename = "content_library_tf_"
-    source_url = "https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.ova"
+    source_url = "https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.ova"
   }
 }
 
