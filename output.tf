@@ -3,7 +3,7 @@ output "ubuntu_ip" {
 }
 
 output "dns_ip" {
-  value = var.dhcp == false ? split("/", var.ubuntu_ip4_addresses[-1])[0] : vsphere_virtual_machine.dns.*.default_ip_address
+  value = var.dhcp == false ? split("/", var.ubuntu_ip4_addresses[-1])[0] : vsphere_virtual_machine.dns[0].default_ip_address
 }
 
 output "ubuntu_username" {
@@ -24,4 +24,8 @@ output "dns_password" {
 
 output "ssh_private_key_path" {
   value = "~/.ssh/${var.ssh_key.private_key_name}.pem"
+}
+
+output "ssh_connect_to_dns" {
+  value = var.dhcp == false ? "ssh -i ~/.ssh/${var.ssh_key.private_key_name}.pem -o StrictHostKeyChecking=no ubuntu@${split("/", var.ubuntu_ip4_addresses[-1])[0]}" : "ssh -i ~/.ssh/${var.ssh_key.private_key_name}.pem -o StrictHostKeyChecking=no ubuntu@${vsphere_virtual_machine.dns[0].default_ip_address}"
 }

@@ -31,6 +31,10 @@ variable "nameservers" {
   default = "10.206.8.130, 10.206.8.130, 10.206.8.131"
 }
 
+variable "domain" {
+  default = "avi.com"
+}
+
 variable "ssh_key" {
   type = map
   default = {
@@ -68,7 +72,6 @@ variable "ubuntu" {
 }
 
 variable "dns" {
-  type = map
   default = {
     basename = "dns-tf-"
     username = "ubuntu"
@@ -78,5 +81,8 @@ variable "dns" {
     disk = 12
     wait_for_guest_net_routable = "false"
     netplanFile = "/etc/netplan/50-cloud-init.yaml"
+    bind = {
+      key_name = "my_key_name"
+    }
   }
 }

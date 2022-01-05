@@ -28,6 +28,9 @@ data "template_file" "dns_userdata_dhcp" {
     password      = var.ubuntu_password == null ? random_string.ubuntu_password.result : var.ubuntu_password
     pubkey        = chomp(tls_private_key.ssh.public_key_openssh)
     hostname = "${var.dns.basename}${random_string.id.result}${count.index}"
+    keyName = var.dns.bind.key_name
+    secret = base64encode(var.ubuntu_password == null ? random_string.ubuntu_password.result : var.ubuntu_password)
+    domain = var.domain
   }
 }
 
