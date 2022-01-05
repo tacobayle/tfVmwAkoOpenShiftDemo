@@ -20,6 +20,6 @@ resource "null_resource" "clear_ssh_key_locally_static" {
 resource "null_resource" "clear_ssh_key_locally_dhcp" {
   count = (var.dhcp == true ? var.ubuntu.count : 0)
   provisioner "local-exec" {
-    command = "ssh-keygen -f \"/home/ubuntu/.ssh/known_hosts\" -R \"${vsphere_virtual_machine.ubuntu_dhcp[count.index].default_ip_address}\" || true"
+    command = "ssh-keygen -f \"/home/ubuntu/.ssh/known_hosts\" -R \"${vsphere_virtual_machine.ubuntu[count.index].default_ip_address}\" || true"
   }
 }
