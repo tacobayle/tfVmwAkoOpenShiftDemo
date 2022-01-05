@@ -9,7 +9,7 @@ resource "random_string" "ubuntu_password" {
 }
 
 data "template_file" "network" {
-  count            = (var.dhcp == false ? length(var.ubuntu_ip4_addresses) : 0)
+  count            = (var.dhcp == false ? var.ubuntu.count : 0)
   template = file("templates/network.template")
   vars = {
     if_name = var.ubuntu.if_name
@@ -21,7 +21,7 @@ data "template_file" "network" {
 
 data "template_file" "ubuntu_userdata_static" {
   template = file("${path.module}/userdata/ubuntu_static.userdata")
-  count            = (var.dhcp == false ? length(var.ubuntu_ip4_addresses) : 0)
+  count            = (var.dhcp == false ? var.ubuntu.count : 0)
   vars = {
     password      = var.ubuntu_password == null ? random_string.ubuntu_password.result : var.ubuntu_password
     pubkey        = chomp(tls_private_key.ssh.public_key_openssh)
@@ -32,7 +32,7 @@ data "template_file" "ubuntu_userdata_static" {
 }
 
 resource "vsphere_virtual_machine" "ubuntu" {
-  count            = var.dhcp == false ? length(var.ubuntu_ip4_addresses) : var.ubuntu.count
+  count            = var.ubuntu.count
   name             = "${var.ubuntu.basename}${random_string.id.result}${count.index}"
   datastore_id     = data.vsphere_datastore.datastore.id
   resource_pool_id = data.vsphere_resource_pool.pool.id
