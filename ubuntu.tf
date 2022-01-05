@@ -26,28 +26,14 @@ data "template_file" "ubuntu_userdata_static" {
     password      = var.ubuntu_password == null ? random_string.ubuntu_password.result : var.ubuntu_password
     pubkey        = chomp(tls_private_key.ssh.public_key_openssh)
     netplanFile = var.ubuntu.netplanFile
-    hostname = "${var.ubuntu.basename}${random_string.ubuntu_name_id_static[count.index].result}"
+    hostname = "${var.ubuntu.basename}${random_string.id.result}${count.index}"
     network_config  = base64encode(data.template_file.network[count.index].rendered)
   }
 }
 
-resource "random_string" "ubuntu_name_id" {
-  count            = var.ubuntu.count
-  length           = 8
-  special          = true
-  min_lower        = 8
-}
-
-resource "random_string" "ubuntu_name_id_static" {
-  count            = (var.dhcp == false ? length(var.ubuntu_ip4_addresses) : 0)
-  length           = 8
-  special          = true
-  min_lower        = 8
-}
-
 resource "vsphere_virtual_machine" "ubuntu" {
   count            = var.dhcp == false ? length(var.ubuntu_ip4_addresses) : var.ubuntu.count
-  name             = "${var.ubuntu.basename}${random_string.ubuntu_name_id_static[count.index].result}"
+  name             = "${var.ubuntu.basename}${random_string.id.result}${count.index}"
   datastore_id     = data.vsphere_datastore.datastore.id
   resource_pool_id = data.vsphere_resource_pool.pool.id
   network_interface {
@@ -75,7 +61,7 @@ resource "vsphere_virtual_machine" "ubuntu" {
 
   vapp {
     properties = {
-     hostname    = "${var.ubuntu.basename}${random_string.ubuntu_name_id_static[count.index].result}"
+     hostname    = "${var.ubuntu.basename}${random_string.id.result}${count.index}"
      public-keys = chomp(tls_private_key.ssh.public_key_openssh)
      user-data   = var.dhcp == false ? base64encode(data.template_file.ubuntu_userdata_static[count.index].rendered) : base64encode(data.template_file.ubuntu_userdata_dhcp[0].rendered)
    }
@@ -102,6 +88,6 @@ data "template_file" "ubuntu_userdata_dhcp" {
   vars = {
     password      = var.ubuntu_password == null ? random_string.ubuntu_password.result : var.ubuntu_password
     pubkey        = chomp(tls_private_key.ssh.public_key_openssh)
-    hostname = "${var.ubuntu.basename}${random_string.ubuntu_name_id[count.index].result}"
+    hostname = "${var.ubuntu.basename}${random_string.id.result}${count.index}"
   }
 }
