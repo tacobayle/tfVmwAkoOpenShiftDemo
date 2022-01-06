@@ -44,11 +44,11 @@ variable "cluster_name" {
 }
 
 variable "openshift_api_ip" {
-  default = "1.1.1.1"
+  default = "10.206.112.70"
 }
 
 variable "openshift_ingress_ip" {
-  default = "1.1.1.2"
+  default = "10.206.112.71"
 }
 
 variable "ssh_key" {
