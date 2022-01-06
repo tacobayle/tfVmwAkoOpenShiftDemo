@@ -35,5 +35,6 @@ platform:
     password: ${password}
     username: ${username}
     vCenter: ${vCenter}
+    folder: "/${datacenter}/vm/${folder_name}/${cluster}"
 publish: External
 pullSecret: ${pullSecret}

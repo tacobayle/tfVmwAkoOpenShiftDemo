@@ -2,7 +2,7 @@ data "template_file" "install_config" {
   template = file("templates/install-config.yaml.template")
   vars = {
     apiVIP = var.openshift_api_ip
-    cluster  = var.vcenter_cluster
+    cluster  = split(".", var.domain)[0]
     datacenter = var.vcenter_dc
     datastore = var.vcenter_datastore
     ingressVIP = var.openshift_ingress_ip
@@ -10,6 +10,7 @@ data "template_file" "install_config" {
     password = var.vsphere_password
     username = var.vsphere_username
     vCenter = var.vsphere_server
+    folder_name = var.vcenter_folder
     pullSecret = var.openshift_pull_secret
   }
 }
