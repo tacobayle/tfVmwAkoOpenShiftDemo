@@ -26,7 +26,9 @@ resource "null_resource" "install_openshift" {
   }
 
   provisioner "remote-exec" {
-    command = "cat > install-config.yaml <<EOL\n${data.template_file.install_config.rendered}\nEOL"
+    inline      = [
+      "cat > install-config.yaml <<EOL\n${data.template_file.install_config.rendered}\nEOL"
+    ]
   }
 
   provisioner "file" {
