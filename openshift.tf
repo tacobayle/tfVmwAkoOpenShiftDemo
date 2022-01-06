@@ -42,4 +42,10 @@ resource "null_resource" "install_openshift" {
       "tar -xvf openshift-install-linux.tar.gz"
     ]
   }
+
+  provisioner "remote-exec" {
+    inline      = [
+      "./openshift-install create cluster"
+    ]
+  }
 }
