@@ -10,7 +10,7 @@ data "template_file" "install_config" {
     password = var.vsphere_password
     username = var.vsphere_username
     vCenter = var.vsphere_server
-    folder_name = var.vcenter_folder
+    folder_name = "${var.vcenter_folder}-${random_string.id.result}"
     pullSecret = var.openshift_pull_secret
   }
 }
