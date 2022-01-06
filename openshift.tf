@@ -35,6 +35,8 @@ resource "null_resource" "install_openshift" {
   }
 
   provisioner "remote-exec" {
-    command = "tar -xvf openshift-install-linux.tar.gz"
+    inline      = [
+      "tar -xvf openshift-install-linux.tar.gz"
+    ]
   }
 }
