@@ -29,7 +29,7 @@ data "template_file" "dns_userdata_dhcp" {
     hostname = "${var.dns.basename}${random_string.id.result}${count.index}"
     keyName = var.dns.bind.key_name
     secret = base64encode(var.ubuntu_password == null ? random_string.ubuntu_password.result : var.ubuntu_password)
-    domain = "${var.cluster_name}.${var.domain}"
+    domain = "${var.openshift_cluster_name}.${var.domain}"
     openshift_api_ip = var.openshift_api_ip
     openshift_ingress_ip = var.openshift_ingress_ip
   }

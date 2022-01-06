@@ -1,7 +1,7 @@
 data "template_file" "install_config" {
   template = file("templates/install-config.yaml.template")
   vars = {
-    name = split(".", var.domain)[0]
+    name = var.openshift_cluster_name
     apiVIP = var.openshift_api_ip
     cluster  = var.vcenter_cluster
     datacenter = var.vcenter_dc

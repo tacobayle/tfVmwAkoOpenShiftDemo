@@ -59,7 +59,7 @@ variable "domain" {
   default = "avi.com"
 }
 
-variable "cluster_name" {
+variable "openshift_cluster_name" {
   default = "cluster1"
 }
 
