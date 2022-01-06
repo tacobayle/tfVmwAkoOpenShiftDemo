@@ -47,6 +47,7 @@ data "template_file" "ubuntu_userdata_dhcp" {
     network_config  = base64encode(data.template_file.network_dhcp_static.rendered)
     net_plan_file = var.ubuntu.net_plan_file
     network_config  = base64encode(data.template_file.network_dhcp_static.rendered)
+    vcenter_server = var.vsphere_server
   }
 }
 

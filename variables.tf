@@ -6,17 +6,37 @@ variable "vsphere_password" {}
 variable "ubuntu_password" {
   default = null
 }
+variable "openshift_pull_secret" {}
 
 variable "vcenter" {
   type = map
   default = {
-    server        = "wdc-06-vc12.oc.vmware.com"
     dc            = "wdc-06-vc12"
     cluster       = "wdc-06-vc12c01"
     datastore     = "wdc-06-vc12c01-vsan"
     network       = "vxw-dvs-34-virtualwire-3-sid-6120002-wdc-06-vc12-avi-mgmt"
     resource_pool = "wdc-06-vc12c01/Resources"
   }
+}
+
+variable "vsphere_server" {
+  default = "wdc-06-vc12.oc.vmware.com"
+}
+
+variable "vcenter_dc" {
+  default = "wdc-06-vc12"
+}
+
+variable "vcenter_cluster" {
+  default = "wdc-06-vc12c01"
+}
+
+variable "vcenter_datastore" {
+  default = "wdc-06-vc12c01-vsan"
+}
+
+variable "vcenter_network_mgmt_name" {
+  default = "vxw-dvs-34-virtualwire-3-sid-6120002-wdc-06-vc12-avi-mgmt"
 }
 
 variable "vcenter_folder" {
@@ -44,11 +64,11 @@ variable "cluster_name" {
 }
 
 variable "openshift_api_ip" {
-  default = "10.206.112.70"
+  default = "10.206.112.78"
 }
 
 variable "openshift_ingress_ip" {
-  default = "10.206.112.71"
+  default = "10.206.112.79"
 }
 
 variable "ssh_key" {

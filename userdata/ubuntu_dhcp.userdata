@@ -46,6 +46,11 @@ write_files:
       sed -i -e "s/gw_to_be_replaced/$gw/g" /tmp/50-cloud-init.yaml
       sudo cp /tmp/50-cloud-init.yaml ${net_plan_file}
       sudo netplan apply
+      #
+      # Add self signed certificate
+      #
+      echo | openssl s_client -showcerts -servername ${vcenter_server} -connect ${vcenter_server}:443 2>/dev/null | awk '/-----BEGIN CERTIFICATE-----/, /-----END CERTIFICATE-----/' >> /usr/local/share/ca-certificates/ca-certificates.crt
+      update-ca-certificates
       echo "cloud init done" | tee /tmp/cloudInitDone.log
     path: /opt/bootstrap.sh
     permissions: "0755"
