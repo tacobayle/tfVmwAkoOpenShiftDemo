@@ -8,17 +8,6 @@ variable "ubuntu_password" {
 }
 variable "openshift_pull_secret" {}
 
-variable "vcenter" {
-  type = map
-  default = {
-    dc            = "wdc-06-vc12"
-    cluster       = "wdc-06-vc12c01"
-    datastore     = "wdc-06-vc12c01-vsan"
-    network       = "vxw-dvs-34-virtualwire-3-sid-6120002-wdc-06-vc12-avi-mgmt"
-    resource_pool = "wdc-06-vc12c01/Resources"
-  }
-}
-
 variable "vsphere_server" {
   default = "wdc-06-vc12.oc.vmware.com"
 }
