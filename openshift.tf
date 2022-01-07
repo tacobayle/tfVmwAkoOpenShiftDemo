@@ -13,6 +13,7 @@ data "template_file" "install_config" {
     vCenter = var.vsphere_server
     folder_name = "${var.vcenter_folder}-${random_string.id.result}"
     pullSecret = var.openshift_pull_secret
+    domain = var.domain
   }
 }
 
