@@ -1,1 +1,1 @@
-cd ~/tfVmwAkoOpenShiftDemo  ; ./openshift-install destroy cluster; terraform destroy -auto-approve ; cd ~ ; rm -fr tfVmwAkoOpenShiftDemo ; git clone https://github.com/tacobayle/tfVmwAkoOpenShiftDemo ; cd tfVmwAkoOpenShiftDemo ; terraform init ; terraform apply -auto-approve
+cd ~/tfVmwAkoOpenShiftDemo ; terraform destroy -auto-approve ; cd ~ ; rm -fr tfVmwAkoOpenShiftDemo ; git clone https://github.com/tacobayle/tfVmwAkoOpenShiftDemo ; cd tfVmwAkoOpenShiftDemo ; terraform init ; terraform apply -auto-approve
