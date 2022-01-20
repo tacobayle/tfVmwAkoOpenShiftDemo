@@ -112,8 +112,8 @@ write_files:
                               NS      dns.${domain}.
       \$ORIGIN ${domain}.
       dns                     A       ip_to_be_replaced
-      api                     A       ${openshift_api_ip}
-      *                       A       ${openshift_ingress_ip}
+      api.${ocpname}          A       ${openshift_api_ip}
+      *.${ocpname}            A       ${openshift_ingress_ip}
       \$TTL 3600       ; 1 hour
       EOT
       sed -i -e "s/ip_to_be_replaced/$ip/g" /var/lib/bind/db.${domain}
