@@ -35,5 +35,5 @@ output "ssh_connect_to_ubuntu" {
 }
 
 output "destroy_command" {
-  value = var.dhcp == false ? "ssh -o StrictHostKeyChecking=no -i -i ~/.ssh/${var.ssh_key.private_key_name}.pem -t ubuntu@${split("/", var.ubuntu_ip4_addresses[0])[0]} './openshift-install destroy cluster'" : "ssh -o StrictHostKeyChecking=no -i -i ~/.ssh/${var.ssh_key.private_key_name}.pem -t ubuntu@${vsphere_virtual_machine.ubuntu[0].default_ip_address} './openshift-install destroy cluster'"
+  value = var.dhcp == false ? "ssh -o StrictHostKeyChecking=no -i ~/.ssh/${var.ssh_key.private_key_name}.pem -t ubuntu@${split("/", var.ubuntu_ip4_addresses[0])[0]} './openshift-install destroy cluster'" : "ssh -o StrictHostKeyChecking=no -i ~/.ssh/${var.ssh_key.private_key_name}.pem -t ubuntu@${vsphere_virtual_machine.ubuntu[0].default_ip_address} './openshift-install destroy cluster'"
 }
