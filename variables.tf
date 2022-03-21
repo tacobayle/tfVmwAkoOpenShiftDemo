@@ -8,6 +8,8 @@ variable "ubuntu_password" {
 }
 variable "openshift_pull_secret" {}
 
+variable "avi_controller_url" {}
+
 variable "vsphere_server" {
   default = "wdc-06-vc12.oc.vmware.com"
 }
@@ -26,6 +28,10 @@ variable "vcenter_datastore" {
 
 variable "vcenter_network_mgmt_name" {
   default = "vxw-dvs-34-virtualwire-3-sid-6120002-wdc-06-vc12-avi-mgmt"
+}
+
+variable "vcenter_network_openshift_name" {
+  default = "vxw-dvs-34-virtualwire-116-sid-6120115-wdc-06-vc12-avi-dev112"
 }
 
 variable "vcenter_folder" {
@@ -109,5 +115,15 @@ variable "dns" {
     bind = {
       key_name = "my_key_name"
     }
+  }
+}
+
+variable "controller" {
+  default = {
+    cpu = 8
+    basename = "avi-controller-"
+    memory = 24768
+    disk = 128
+    wait_for_guest_net_timeout = 4
   }
 }

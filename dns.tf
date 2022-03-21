@@ -13,7 +13,7 @@ data "template_file" "dns_userdata_static" {
   template = file("${path.module}/userdata/dns_static.userdata")
   count            = (var.dhcp == false ? 1 : 0)
   vars = {
-    password      = var.ubuntu_password == null ? random_string.ubuntu_password.result : var.ubuntu_password
+    password      = var.ubuntu_password == null ? random_string.password.result : var.ubuntu_password
     pubkey        = chomp(tls_private_key.ssh.public_key_openssh)
     netplanFile = var.dns.net_plan_file
     hostname = "${var.dns.basename}${random_string.id.result}${count.index}"
@@ -24,11 +24,11 @@ data "template_file" "dns_userdata_dhcp" {
   template = file("${path.module}/userdata/dns_dhcp.userdata")
   count            = (var.dhcp == true ? 1 : 0)
   vars = {
-    password      = var.ubuntu_password == null ? random_string.ubuntu_password.result : var.ubuntu_password
+    password      = var.ubuntu_password == null ? random_string.password.result : var.ubuntu_password
     pubkey        = chomp(tls_private_key.ssh.public_key_openssh)
     hostname = "${var.dns.basename}${random_string.id.result}${count.index}"
     keyName = var.dns.bind.key_name
-    secret = base64encode(var.ubuntu_password == null ? random_string.ubuntu_password.result : var.ubuntu_password)
+    secret = base64encode(var.ubuntu_password == null ? random_string.password.result : var.ubuntu_password)
     domain = var.domain
     ocpname = var.openshift_cluster_name
     openshift_api_ip = var.openshift_api_ip

@@ -7,7 +7,7 @@ data "template_file" "install_config" {
     datacenter = var.vcenter_dc
     datastore = var.vcenter_datastore
     ingressVIP = var.openshift_ingress_ip
-    network = var.vcenter_network_mgmt_name
+    network = var.vcenter_network_openshift_name
     password = var.vsphere_password
     username = var.vsphere_username
     vCenter = var.vsphere_server
@@ -20,7 +20,7 @@ data "template_file" "install_config" {
 resource "null_resource" "install_openshift" {
   count = 1
   connection {
-    host = var.dhcp == false ? split("/", var.ubuntu_ip4_addresses[count.index])[0] : vsphere_virtual_machine.ubuntu[0].default_ip_address
+    host = vsphere_virtual_machine.ubuntu[0].default_ip_address
     type = "ssh"
     agent = false
     user = "ubuntu"

@@ -11,7 +11,7 @@ output "ubuntu_username" {
 }
 
 output "ubuntu_password" {
-  value = var.ubuntu_password == null ? random_string.ubuntu_password.result : var.ubuntu_password
+  value = var.ubuntu_password == null ? random_string.password.result : var.ubuntu_password
 }
 
 output "dns_username" {
@@ -19,7 +19,7 @@ output "dns_username" {
 }
 
 output "dns_password" {
-  value = var.ubuntu_password == null ? random_string.ubuntu_password.result : var.ubuntu_password
+  value = var.ubuntu_password == null ? random_string.password.result : var.ubuntu_password
 }
 
 output "ssh_private_key_path" {
