@@ -63,15 +63,15 @@ variable "openshift_cluster_name" {
 }
 
 variable "openshift_ubuntu_ip" {
-  default = "100.64.129.110"
+  default = "100.64.129.210"
 }
 
 variable "openshift_api_ip" {
-  default = "100.64.129.111"
+  default = "100.64.129.211"
 }
 
 variable "openshift_ingress_ip" {
-  default = "100.64.129.112"
+  default = "100.64.129.212"
 }
 
 variable "ssh_key" {
