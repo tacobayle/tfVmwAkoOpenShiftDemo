@@ -15,6 +15,7 @@ data "template_file" "network_dhcp_static" {
   vars = {
     dns_ip = vsphere_virtual_machine.dns[0].default_ip_address
     ip4_second = var.openshift_ubuntu_ip
+    prefix_second = split("/", var.vcenter_network_openshift_cidr)[1]
   }
 }
 

@@ -11,4 +11,4 @@ network:
     if_name_secondary_to_be_replaced:
       dhcp4: false
       addresses:
-        - ${ip4_second}
+        - ${ip4_second}/${prefix_second}
