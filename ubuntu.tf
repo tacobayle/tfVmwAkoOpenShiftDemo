@@ -96,6 +96,7 @@ resource "vsphere_virtual_machine" "ubuntu" {
 
 resource "null_resource" "add_nic_to_ubuntu" {
   depends_on = [vsphere_virtual_machine.ubuntu]
+  count            = 1
 
   provisioner "local-exec" {
     command = <<-EOT

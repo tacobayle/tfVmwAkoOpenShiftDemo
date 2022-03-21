@@ -11,7 +11,7 @@ resource "local_file" "private_key" {
 }
 
 resource "null_resource" "clear_ssh_key_ubuntu" {
-  count = var.ubuntu.count
+  count = 1
   provisioner "local-exec" {
     command = "ssh-keygen -f \"/home/ubuntu/.ssh/known_hosts\" -R \"${vsphere_virtual_machine.ubuntu[count.index].default_ip_address}\" || true"
   }

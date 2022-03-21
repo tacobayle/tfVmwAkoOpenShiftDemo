@@ -99,7 +99,6 @@ variable "ubuntu" {
   type = map
   default = {
     basename = "ubuntu-tf-"
-    count = 1
     username = "ubuntu"
     cpu = 8
     if_name = "ens192"
