@@ -81,25 +81,38 @@ write_files:
         };
         file "/var/lib/bind/db.${domain}";
       };
-      zone "reverse_to_be_replaced" {
+      zone "reverse_openshift_to_be_replaced" {
         type master;
         update-policy {
           grant myKeyName zonesub any;
         };
         allow-transfer { any; };
-        file "/var/lib/bind/db.reverse";
+        file "/var/lib/bind/db.reverse_openshift";
+      };
+      zone "reverse_mgmt_to_be_replaced" {
+        type master;
+        update-policy {
+          grant myKeyName zonesub any;
+        };
+        allow-transfer { any; };
+        file "/var/lib/bind/db.reverse_mgmt";
       };
       EOT
       until [ ! -z "$if_primary_name" ] ; do if_primary_name=$(ip route | grep default | sed -e "s/^.*dev.//" -e "s/.proto.*//")  ; sleep 2 ; done
       until [ ! -z "$ip" ] ; do ip=$(ip address show dev $if_primary_name | grep -v inet6 | grep inet | awk '{print $2}' | awk -F'/' '{print $1}')  ; sleep 2 ; done
-
       octets=""
-      addr="in-addr.arpa
-      ip=${openshift_cidr}
+      addr="in-addr.arpa"
+      openshift_cidr=${openshift_cidr}
+      IFS="." read -r -a octets <<< "$openshift_cidr"
+      count=0
+      for octet in "$${octets[@]}"; do if [ $count -eq 3 ]; then break ; fi ; addr=$octet"."$addr ;((count++)) ; done
+      sed -i -e "s/reverse_openshift_to_be_replaced/$addr/g" /etc/bind/named.conf.local
+      octets=""
+      addr="in-addr.arpa"
       IFS="." read -r -a octets <<< "$ip"
       count=0
       for octet in "$${octets[@]}"; do if [ $count -eq 3 ]; then break ; fi ; addr=$octet"."$addr ;((count++)) ; done
-      sed -i -e "s/reverse_to_be_replaced/$addr/g" /etc/bind/named.conf.local
+      sed -i -e "s/reverse_mgmt_to_be_replaced/$addr/g" /etc/bind/named.conf.local
       #
       sudo tee /var/lib/bind/db.${domain} > /dev/null <<EOT
       \$ORIGIN .
@@ -120,7 +133,33 @@ write_files:
       EOT
       sed -i -e "s/ip_to_be_replaced/$ip/g" /var/lib/bind/db.${domain}
       #
-      sudo tee /var/lib/bind/db.reverse > /dev/null <<EOT
+      # zone reverse for openshift
+      #
+      sudo tee /var/lib/bind/db.reverse_openshift > /dev/null <<EOT
+      \$ORIGIN .
+      \$TTL 60
+      reverse_to_be_replaced     IN SOA  dns.${domain}. admin.${domain}. (
+                                      298        ; serial
+                                      604800     ; refresh (1 week)
+                                      86400      ; retry (1 day)
+                                      2419200    ; expire (4 weeks)
+                                      604800     ; minimum (1 week)
+                                      )
+                              NS      dns.${domain}.
+      \$ORIGIN reverse_to_be_replaced
+      ${last_octet_api}            PTR     api.${domain}.
+      EOT
+      octets=""
+      addr="in-addr.arpa"
+      openshift_cidr=${openshift_cidr}
+      IFS="." read -r -a octets <<< "$openshift_cidr"
+      count=0
+      for octet in "$${octets[@]}"; do if [ $count -eq 3 ]; then break ; fi ; addr=$octet"."$addr ;((count++)) ; done
+      sed -i -e "s/reverse_to_be_replaced/$addr/g" /var/lib/bind/db.reverse_openshift
+      #
+      # zone reverse for mgmt
+      #
+      sudo tee /var/lib/bind/db.reverse_mgmt > /dev/null <<EOT
       \$ORIGIN .
       \$TTL 60
       reverse_to_be_replaced     IN SOA  dns.${domain}. admin.${domain}. (
@@ -134,10 +173,18 @@ write_files:
       \$ORIGIN reverse_to_be_replaced
       last_octet_to_be_replaced            PTR     dns.${domain}.
       EOT
-      sed -i -e "s/reverse_to_be_replaced/$addr/g" /var/lib/bind/db.reverse
+      octets=""
+      addr="in-addr.arpa"
+      IFS="." read -r -a octets <<< "$ip"
+      count=0
+      for octet in "$${octets[@]}"; do if [ $count -eq 3 ]; then break ; fi ; addr=$octet"."$addr ;((count++)) ; done
+      sed -i -e "s/reverse_to_be_replaced/$addr/g" /var/lib/bind/db.reverse_mgmt
       count=0
       for octet in "$${octets[@]}"; do if [ $count -eq 3 ]; then last_octet=$octet ; fi ; ((count++)) ; done
-      sed -i -e "s/last_octet_to_be_replaced/$last_octet/g" /var/lib/bind/db.reverse
+      sed -i -e "s/last_octet_to_be_replaced/$last_octet/g" /var/lib/bind/db.reverse_mgmt
+      #
+      # Bind restart
+      #
       sudo service bind9 restart
       echo "cloud init done" | tee /tmp/cloudInitDone.log
     path: /opt/bootstrap.sh

@@ -62,6 +62,10 @@ variable "openshift_cluster_name" {
   default = "cluster1"
 }
 
+variable "openshift_ubuntu_ip" {
+  default = "100.64.129.110"
+}
+
 variable "openshift_api_ip" {
   default = "100.64.129.111"
 }

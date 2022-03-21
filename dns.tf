@@ -1,25 +1,3 @@
-data "template_file" "network_dns" {
-  count            = (var.dhcp == false ? 1 : 0)
-  template = file("templates/network.template")
-  vars = {
-    if_name = var.dns.if_name
-    ip4 = var.ubuntu_ip4_addresses[-1]
-    gw4 = var.gateway4
-    dns = var.nameservers
-  }
-}
-
-data "template_file" "dns_userdata_static" {
-  template = file("${path.module}/userdata/dns_static.userdata")
-  count            = (var.dhcp == false ? 1 : 0)
-  vars = {
-    password      = var.ubuntu_password == null ? random_string.password.result : var.ubuntu_password
-    pubkey        = chomp(tls_private_key.ssh.public_key_openssh)
-    netplanFile = var.dns.net_plan_file
-    hostname = "${var.dns.basename}${random_string.id.result}${count.index}"
-  }
-}
-
 data "template_file" "dns_userdata_dhcp" {
   template = file("${path.module}/userdata/dns_dhcp.userdata")
   count            = (var.dhcp == true ? 1 : 0)
@@ -34,6 +12,7 @@ data "template_file" "dns_userdata_dhcp" {
     ocpname = var.openshift_cluster_name
     openshift_api_ip = var.openshift_api_ip
     openshift_ingress_ip = var.openshift_ingress_ip
+    last_octet_api = split(".", var.openshift_api_ip)[4]
   }
 }
 
@@ -70,7 +49,7 @@ resource "vsphere_virtual_machine" "dns" {
     properties = {
      hostname    = "${var.dns.basename}${random_string.id.result}${count.index}"
      public-keys = chomp(tls_private_key.ssh.public_key_openssh)
-     user-data   = var.dhcp == false ? base64encode(data.template_file.dns_userdata_static[count.index].rendered) : base64encode(data.template_file.dns_userdata_dhcp[0].rendered)
+     user-data   = base64encode(data.template_file.dns_userdata_dhcp[0].rendered)
    }
  }
 
