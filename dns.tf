@@ -43,7 +43,7 @@ resource "vsphere_virtual_machine" "dns" {
   resource_pool_id = data.vsphere_resource_pool.pool.id
   folder           = vsphere_folder.folder.path
   network_interface {
-                      network_id = data.vsphere_network.network.id
+                      network_id = data.vsphere_network.network_mgmt.id
   }
 
   num_cpus = var.dns.cpu
@@ -62,7 +62,7 @@ resource "vsphere_virtual_machine" "dns" {
   }
 
   clone {
-    template_uuid = vsphere_content_library_item.file.id
+    template_uuid = vsphere_content_library_item.file_ubuntu.id
   }
 
   vapp {
