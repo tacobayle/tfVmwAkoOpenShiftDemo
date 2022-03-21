@@ -34,6 +34,10 @@ variable "vcenter_network_openshift_name" {
   default = "vxw-dvs-34-virtualwire-116-sid-6120115-wdc-06-vc12-avi-dev112"
 }
 
+variable "vcenter_network_openshift_cidr" {
+  default = "100.64.129.0/24"
+}
+
 variable "vcenter_folder" {
   default = "tf_ako_openshift_demo"
 }
@@ -59,11 +63,11 @@ variable "openshift_cluster_name" {
 }
 
 variable "openshift_api_ip" {
-  default = "10.206.112.78"
+  default = "100.64.129.111"
 }
 
 variable "openshift_ingress_ip" {
-  default = "10.206.112.79"
+  default = "100.64.129.112"
 }
 
 variable "ssh_key" {

@@ -30,6 +30,7 @@ data "template_file" "dns_userdata_dhcp" {
     keyName = var.dns.bind.key_name
     secret = base64encode(var.ubuntu_password == null ? random_string.password.result : var.ubuntu_password)
     domain = var.domain
+    openshift_cidr = split("/", var.vcenter_network_openshift_cidr)[0]
     ocpname = var.openshift_cluster_name
     openshift_api_ip = var.openshift_api_ip
     openshift_ingress_ip = var.openshift_ingress_ip

@@ -92,8 +92,10 @@ write_files:
       EOT
       until [ ! -z "$if_primary_name" ] ; do if_primary_name=$(ip route | grep default | sed -e "s/^.*dev.//" -e "s/.proto.*//")  ; sleep 2 ; done
       until [ ! -z "$ip" ] ; do ip=$(ip address show dev $if_primary_name | grep -v inet6 | grep inet | awk '{print $2}' | awk -F'/' '{print $1}')  ; sleep 2 ; done
+
       octets=""
-      addr="in-addr.arpa"
+      addr="in-addr.arpa
+      ip=${openshift_cidr}
       IFS="." read -r -a octets <<< "$ip"
       count=0
       for octet in "$${octets[@]}"; do if [ $count -eq 3 ]; then break ; fi ; addr=$octet"."$addr ;((count++)) ; done
