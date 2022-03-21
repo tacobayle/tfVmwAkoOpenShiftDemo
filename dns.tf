@@ -12,7 +12,7 @@ data "template_file" "dns_userdata_dhcp" {
     ocpname = var.openshift_cluster_name
     openshift_api_ip = var.openshift_api_ip
     openshift_ingress_ip = var.openshift_ingress_ip
-    last_octet_api = split(".", var.openshift_api_ip)[4]
+    last_octet_api = split(".", var.openshift_api_ip)[3]
   }
 }
 
