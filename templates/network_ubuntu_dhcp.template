@@ -7,8 +7,7 @@ network:
         - ip_to_be_replaced/prefix_length_to_be_replaced
       gateway4: gw_to_be_replaced
       nameservers:
-        addresses: [${dns_ip}
-      set-name: if_name_primary_to_be_replaced
+        addresses: [${dns_ip}]
     if_name_secondary_to_be_replaced:
       dhcp4: false
       addresses:
