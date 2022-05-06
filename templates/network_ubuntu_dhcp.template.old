@@ -8,3 +8,7 @@ network:
       gateway4: gw_to_be_replaced
       nameservers:
         addresses: [${dns_ip}]
+    if_name_secondary_to_be_replaced:
+      dhcp4: false
+      addresses:
+        - ${ip4_second}/${prefix_second}

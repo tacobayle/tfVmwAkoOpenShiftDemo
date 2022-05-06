@@ -31,11 +31,11 @@ variable "vcenter_network_mgmt_name" {
 }
 
 variable "vcenter_network_openshift_name" {
-  default = "vxw-dvs-34-virtualwire-116-sid-6120115-wdc-06-vc12-avi-dev112"
+  default = "vxw-dvs-34-virtualwire-3-sid-6120002-wdc-06-vc12-avi-mgmt"
 }
 
 variable "vcenter_network_openshift_cidr" {
-  default = "100.64.129.0/24"
+  default = "10.206.112.0/23"
 }
 
 variable "vcenter_folder" {
@@ -43,7 +43,7 @@ variable "vcenter_folder" {
 }
 
 variable "ubuntu_ip4_addresses" {
-  default = ["10.206.112.56/22", "10.206.112.57/22"]
+  default = ["10.206.112.55/22", "10.206.112.56/22"]
 }
 
 variable "gateway4" {
@@ -62,16 +62,16 @@ variable "openshift_cluster_name" {
   default = "cluster1"
 }
 
-variable "openshift_ubuntu_ip" {
-  default = "100.64.129.210"
-}
+//variable "openshift_ubuntu_ip" {
+//  default = "100.64.129.210"
+//}
 
 variable "openshift_api_ip" {
-  default = "100.64.129.211"
+  default = "10.206.112.78"
 }
 
 variable "openshift_ingress_ip" {
-  default = "100.64.129.212"
+  default = "10.206.112.79"
 }
 
 variable "ssh_key" {
