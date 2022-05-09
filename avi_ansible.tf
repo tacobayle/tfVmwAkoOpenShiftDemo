@@ -29,7 +29,7 @@ resource "null_resource" "ansible" {
     vsphere_virtual_machine.controller_dhcp]
 
   connection {
-    host = vsphere_virtual_machine.ubuntu.default_ip_address
+    host = vsphere_virtual_machine.ubuntu[0].default_ip_address
     type = "ssh"
     agent = false
     user = "ubuntu"
