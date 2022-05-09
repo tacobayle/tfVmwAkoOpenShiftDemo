@@ -10,6 +10,14 @@ variable "openshift_pull_secret" {}
 
 variable "avi_controller_url" {}
 
+variable "avi" {}
+variable "avi_password" {}
+variable "avi_old_password" {}
+variable "avi_username" {
+  default = "admin"
+}
+
+
 variable "vsphere_server" {
   default = "wdc-06-vc12.oc.vmware.com"
 }
@@ -62,6 +70,10 @@ variable "openshift_cluster_name" {
   default = "cluster1"
 }
 
+variable "avi_version" {
+  default = "21.1.4"
+}
+
 //variable "openshift_ubuntu_ip" {
 //  default = "100.64.129.210"
 //}
@@ -88,6 +100,17 @@ variable "dhcp" {
   default = true
 }
 
+variable "ansible" {
+  type = map
+  default = {
+    version = "2.10.7"
+    aviPbAbsentUrl = "https://github.com/tacobayle/ansibleAviClear"
+    aviPbAbsentTag = "v1.03"
+    aviConfigureTag = "v1.39"
+    aviConfigureUrl = "https://github.com/tacobayle/ansibleAviConfig"
+  }
+}
+
 variable "content_library" {
   default = {
     basename = "content_library_tf_"
@@ -101,7 +124,6 @@ variable "ubuntu" {
     basename = "ubuntu-tf-"
     username = "ubuntu"
     cpu = 8
-    if_name = "ens192"
     memory = 8192
     disk = 12
     wait_for_guest_net_routable = "false"
@@ -114,7 +136,6 @@ variable "dns" {
     basename = "dns-tf-"
     username = "ubuntu"
     cpu = 4
-    if_name = "ens192"
     memory = 4096
     disk = 12
     wait_for_guest_net_routable = "false"
@@ -132,5 +153,7 @@ variable "controller" {
     memory = 24768
     disk = 128
     wait_for_guest_net_timeout = 4
+    dns =  ["10.23.108.1", "10.23.108.2"]
+    ntp = ["95.81.173.155", "188.165.236.162"]
   }
 }

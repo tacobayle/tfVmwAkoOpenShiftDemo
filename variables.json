@@ -1,0 +1,57 @@
+{
+  "avi": {
+    "config": {
+      "vcenter": {
+        "domains":
+          [
+            {
+              "name": "avi.com"
+            }
+          ],
+        "cloud": {
+          "dhcp_enabled": true,
+          "network_management": {
+            "name": "vxw-dvs-34-virtualwire-3-sid-1080002-sof2-01-vc08-avi-mgmt",
+            "dhcp_enabled": "true",
+            "exclude_discovered_subnets": "true",
+            "vcenter_dvs": "true"
+          },
+          "network_vip": {
+            "name": "vxw-dvs-34-virtualwire-120-sid-6120119-wdc-06-vc12-avi-dev116",
+            "dhcp_enabled": true,
+            "exclude_discovered_subnets": true,
+            "cidr": "100.64.133.0/24",
+            "ipStartPool": "150",
+            "ipEndPool": "199"
+          },
+          "network_backend": {
+            "name": "vxw-dvs-34-virtualwire-117-sid-1080116-sof2-01-vc08-avi-dev113",
+            "dhcp_enabled": true,
+            "exclude_discovered_subnets": true,
+            "cidr": "100.64.130.0/24"
+          }
+        },
+        "service_engine_groups": [
+          {
+            "name": "seg-openshift"
+          }
+        ],
+        "pools": [],
+        "pool_groups": [],
+        "virtual_services": {
+          "http": [],
+          "dns": [
+            {
+              "name": "dns",
+              "services": [
+                {
+                  "port": 53
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}
