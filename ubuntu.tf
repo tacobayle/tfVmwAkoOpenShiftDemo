@@ -40,7 +40,7 @@ data "template_file" "ubuntu_userdata_dhcp" {
     ansible_version = var.ansible.version
     avi_sdk_version = var.avi_version
     username = var.ubuntu.username
-    private_key = tls_private_key.ssh.private_key_pem
+//    private_key = tls_private_key.ssh.private_key_pem
 //    network_config  = base64encode(data.template_file.network_dhcp_static.rendered)
 //    net_plan_file = var.ubuntu.net_plan_file
     vcenter_server = var.vsphere_server
@@ -116,23 +116,23 @@ resource "vsphere_virtual_machine" "ubuntu" {
 //  }
 //}
 
-resource "null_resource" "ubuntu_networking" {
-//  depends_on = [null_resource.add_nic_to_ubuntu]
-
-  connection {
-    host = vsphere_virtual_machine.ubuntu[0].default_ip_address
-    type = "ssh"
-    agent = false
-    user = "ubuntu"
-    private_key = tls_private_key.ssh.private_key_pem
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-//      "if_secondary_name=$(sudo dmesg | grep eth0 | tail -1 | awk -F' ' '{print $5}' | sed 's/://')",
-//      "sudo sed -i -e \"s/if_name_secondary_to_be_replaced/\"$if_secondary_name\"/g\" /tmp/50-cloud-init.yaml",
-      "sudo cp /tmp/50-cloud-init.yaml ${var.ubuntu.net_plan_file}",
-      "sudo netplan apply"
-    ]
-  }
-}
+//resource "null_resource" "ubuntu_networking" {
+////  depends_on = [null_resource.add_nic_to_ubuntu]
+//
+//  connection {
+//    host = vsphere_virtual_machine.ubuntu[0].default_ip_address
+//    type = "ssh"
+//    agent = false
+//    user = "ubuntu"
+//    private_key = tls_private_key.ssh.private_key_pem
+//  }
+//
+//  provisioner "remote-exec" {
+//    inline = [
+////      "if_secondary_name=$(sudo dmesg | grep eth0 | tail -1 | awk -F' ' '{print $5}' | sed 's/://')",
+////      "sudo sed -i -e \"s/if_name_secondary_to_be_replaced/\"$if_secondary_name\"/g\" /tmp/50-cloud-init.yaml",
+//      "sudo cp /tmp/50-cloud-init.yaml ${var.ubuntu.net_plan_file}",
+//      "sudo netplan apply"
+//    ]
+//  }
+//}

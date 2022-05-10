@@ -46,7 +46,6 @@ write_files:
       sudo mkdir -p /etc/ansible
       sudo tee /etc/ansible/ansible.cfg > /dev/null <<EOT
       [defaults]
-      private_key_file = /home/${username}/.ssh/${private_key}
       host_key_checking = False
       host_key_auto_add = True
       EOT
