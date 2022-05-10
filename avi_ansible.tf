@@ -48,9 +48,7 @@ resource "null_resource" "ansible" {
     inline = [
       "mkdir -p ansible",
       "cd ~/ansible ; git clone ${var.ansible.aviConfigureUrl} --branch ${var.ansible.aviConfigureTag}; cd ${split("/", var.ansible.aviConfigureUrl)[4]}",
-      "ansible-playbook vcenter.yml --extra-vars @../avi_yaml_values.yml"
+      "ansible-playbook vcenter.yml --extra-vars @../../avi_yaml_values.yml"
     ]
   }
-
-
 }
