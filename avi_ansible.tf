@@ -29,7 +29,7 @@ data "template_file" "avi_yaml_values" {
 resource "null_resource" "ansible" {
   depends_on = [
     vsphere_virtual_machine.ubuntu,
-    vsphere_virtual_machine.controller_dhcp]
+    null_resource.wait_https_controller]
 
   connection {
     host = vsphere_virtual_machine.ubuntu[0].default_ip_address
