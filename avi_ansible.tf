@@ -13,6 +13,7 @@ data "template_file" "avi_yaml_values" {
     vsphere_password = var.vsphere_password
     vsphere_server = var.vsphere_server
     domains = jsonencode(var.avi.config.vcenter.domains)
+    cloud_name = var.avi.config.vcenter.cloud.name
     dc = var.vcenter_dc
     dchp_enabled = jsonencode(var.avi.config.vcenter.cloud.dhcp_enabled)
     network_management = jsonencode(var.avi.config.vcenter.cloud.network_management)
