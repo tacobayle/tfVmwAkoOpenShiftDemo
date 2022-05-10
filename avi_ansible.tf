@@ -18,7 +18,7 @@ data "template_file" "avi_yaml_values" {
     network_management = jsonencode(var.avi.config.vcenter.cloud.network_management)
     network_vip = jsonencode(var.avi.config.vcenter.cloud.network_vip)
     network_backend = jsonencode(var.avi.config.vcenter.cloud.network_backend)
-    service_engine_groups = jsonencode(var.avi.config.vcenter.cloud.service_engine_groups)
+    service_engine_groups = jsonencode(var.avi.config.vcenter.service_engine_groups)
     pools = jsonencode(var.avi.config.vcenter.pools)
     pool_groups = jsonencode(var.avi.config.vcenter.pool_groups)
     virtual_services = jsonencode(var.avi.config.vcenter.virtual_services)

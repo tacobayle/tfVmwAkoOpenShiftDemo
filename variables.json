@@ -29,12 +29,7 @@
             "dhcp_enabled": true,
             "exclude_discovered_subnets": true,
             "cidr": "100.64.130.0/24"
-          },
-          "service_engine_groups": [
-            {
-              "name": "seg-openshift"
-            }
-          ]
+          }
         },
         "service_engine_groups": [
           {
