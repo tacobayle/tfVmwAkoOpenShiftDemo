@@ -6,6 +6,7 @@ controller:
     ${controller_ntp}
   dns: |
     ${controller_dns}
+  environment: vcenter
 avi_password: ${avi_password}
 avi_old_password: ${avi_old_password}
 avi_version: ${avi_version}
