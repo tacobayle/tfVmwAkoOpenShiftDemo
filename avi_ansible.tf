@@ -3,8 +3,8 @@ data "template_file" "avi_yaml_values" {
   template = file("templates/avi_yaml_values.yml.template")
   vars = {
     controller_ip = vsphere_virtual_machine.controller_dhcp[0].default_ip_address
-    controller_ntp = var.controller.ntp
-    controller_dns = var.controller.dns
+    controller_ntp = jsonencode(var.controller.ntp)
+    controller_dns = jsonencode(var.controller.dns)
     avi_password = var.avi_password
     avi_old_password = var.avi_old_password
     avi_version = var.avi_version
