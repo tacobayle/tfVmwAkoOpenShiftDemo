@@ -101,9 +101,11 @@ variable "dhcp" {
 }
 
 variable "ansible" {
-  type = map
   default = {
-    version = "2.10.7"
+    version = {
+      ansible = "5.7.1"
+      ansible-core = "2.12.5"
+    }
     aviPbAbsentUrl = "https://github.com/tacobayle/ansibleAviClear"
     aviPbAbsentTag = "v1.03"
     aviConfigureTag = "v1.43"

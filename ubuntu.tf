@@ -37,7 +37,8 @@ data "template_file" "ubuntu_userdata_dhcp" {
     password      = var.ubuntu_password == null ? random_string.password.result : var.ubuntu_password
     pubkey        = chomp(tls_private_key.ssh.public_key_openssh)
     hostname = "${var.ubuntu.basename}${random_string.id.result}${count.index}"
-    ansible_version = var.ansible.version
+    ansible_core_version = var.ansible.version.ansible-core
+    ansible_version = var.ansible.version.ansible
     avi_sdk_version = var.avi_version
     username = var.ubuntu.username
 //    private_key = tls_private_key.ssh.private_key_pem
