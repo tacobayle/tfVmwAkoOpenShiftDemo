@@ -12,7 +12,7 @@
           "name": "dc1-vcenter",
           "dhcp_enabled": true,
           "network_management": {
-            "name": "vxw-dvs-34-virtualwire-3-sid-1080002-sof2-01-vc08-avi-mgmt",
+            "name": "vxw-dvs-34-virtualwire-3-sid-6120002-wdc-06-vc12-avi-mgmt",
             "dhcp_enabled": true,
             "exclude_discovered_subnets": true,
             "vcenter_dvs": true,
@@ -35,27 +35,27 @@
             "cidr": "100.64.130.0/24",
             "vcenter_dvs": true,
             "type": "V4"
-          }
-        },
-        "service_engine_groups": [
-          {
-            "name": "seg-openshift"
-          }
-        ],
-        "pools": [],
-        "pool_groups": [],
-        "virtual_services": {
-          "http": [],
-          "dns": [
+          },
+          "service_engine_groups": [
             {
-              "name": "dns",
-              "services": [
-                {
-                  "port": 53
-                }
-              ]
+              "name": "seg-openshift"
             }
-          ]
+          ],
+          "pools": [],
+          "pool_groups": [],
+          "virtual_services": {
+            "http": [],
+            "dns": [
+              {
+                "name": "dns",
+                "services": [
+                  {
+                    "port": 53
+                  }
+                ]
+              }
+            ]
+          }
         }
       }
     }
